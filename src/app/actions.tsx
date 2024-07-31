@@ -9,7 +9,7 @@ const groq = createOpenAI({
   baseURL: "https://api.groq.com/openai/v1",
 });
 
-const systemPrompt = `"users can input a prompt to generate social media posts text "`;
+const systemPrompt = `"Generate social media posts based on the user's input. "`;
 
 export async function generateSocialMediaPosts({input}:{input:string}) {
   const {

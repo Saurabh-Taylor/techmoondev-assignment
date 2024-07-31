@@ -8,10 +8,6 @@ import { generateSocialMediaPosts } from "./actions";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LuClipboardCopy } from "react-icons/lu";
-import { FaRegCommentDots, FaRetweet } from "react-icons/fa6";
-import { GoHeart } from "react-icons/go";
-import { IoBookmarkOutline } from "react-icons/io5";
-import Image from "next/image";
 import { appendNewData, getSheetData } from "./google-sheets.action";
 import moment from "moment-timezone";
 
@@ -27,6 +23,8 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<string[]>([]);
 
+
+  //for future purpose we can build table component to show the data 
   const handleOnGetSheetDataClick = async () => {
     const response = await getSheetData();
     console.log(response)
@@ -38,9 +36,7 @@ export default function Home() {
       Prompt: input,
       Posts:posts
     }
-    console.log(typeof myInputData.Posts);
-    
-    const response  = await appendNewData(myInputData)
+    await appendNewData(myInputData)
     
   }
   
@@ -90,9 +86,9 @@ export default function Home() {
         </span>{" "}
       </h1>
       {/* form container */}
-      <div className="flex items-center justify-center " >
+      <div className="flex items-center justify-center  " >
         <div className="mr-4 " >
-          <button onClick={updateDataOnSheet} >click me</button>
+        
           <input  value={input} onChange={(e)=> setInput(e.target.value)} className="px-4 py-2 text-black"  placeholder="Ask...." type="text" />
         </div>
 
@@ -120,25 +116,22 @@ export default function Home() {
           )}
         </div>
       </div>
+      <Button onClick={updateDataOnSheet} className=" mr-4 inline-flex items-center justify-center px-4 py-1 transition ease-out text-white hover:text-black hover:duration-300 hover:dark:text-neutral-400">
+              <span>✨ Update Data on spreadsheet</span>
+              <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+            </Button>
       {loading ? (
         <SkeletonLoader />
       ) : (
         posts.length > 0 && (
           <div className="space-y-4 mt-4 w-full">
-            {posts.slice(0, 5).map((tweet, index) => (
+            {posts.slice(0, 5).map((post, index) => (
               <div
                 key={index}
                 className="bg-zinc-200 w-full text-black flex flex-col justify-between items-center px-4 py-4 rounded-xl"
               >
                 <div className="row1 w-full flex justify-between items-center">
                   <div className="profile w-full flex gap-2 items-center">
-                    <Image
-                      src="https://scontent-ccu1-1.cdninstagram.com/v/t51.2885-19/449534156_1506380829965283_2514978991263321417_n.jpg?stp=dst-jpg_s150x150&_nc_ht=scontent-ccu1-1.cdninstagram.com&_nc_cat=103&_nc_ohc=Eyd30O51p2MQ7kNvgHsHSTV&edm=AJYBtmQBAAAA&ccb=7-5&oh=00_AYAGmZkTpxTKvTiiSOZ8PlAn3I74NrSk9aPjaTq_r6FDsg&oe=66A1BDFE&_nc_sid=691684"
-                      alt=""
-                      width={50}
-                      height={50}
-                      className="rounded-full "
-                    />
                     <div className="name">
                       <h1 className="leading-tight font-bold text-lg hover:underline">
                         Saurabh Tailor
@@ -147,7 +140,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div
-                    onClick={() => copyToClipboard(tweet)}
+                    onClick={() => copyToClipboard(post)}
                     className="copy flex p-1 rounded-lg items-center gap-1 cursor-pointer transition-all duration-200 hover:text-blue-500"
                   >
                     <LuClipboardCopy size={18} />
@@ -155,15 +148,15 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="tweet w-full mt-2">
-                  <p className="text-left ">{tweet}</p>
-                  <div className="time mt-1">
+                  <p className="text-left ">{post}</p>
+                  {/* <div className="time mt-1">
                     <p className="text-zinc-700 text-sm">
                       <span className="hover:underline">
                         10:04 PM • July 19, 2024{" "}
                       </span>
                       • 270K Views
                     </p>
-                  </div>
+                  </div> */}
                 </div>
                
               </div>
