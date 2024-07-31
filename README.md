@@ -15,7 +15,22 @@ This is a fullstack web application built with TypeScript and Next.js that gener
 - Additional - react-tweet , sonner , zod , moment-timezone
 
 ## Folder Structure
-- 
+├── src/
+│   ├── app/
+│   │   ├── actions.tsx
+│   │   └── Footer.tsx
+│   │   └── globals.css
+│   │   └── Navbar.tsx
+│   │   └── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   └── magicui
+│   │   └── ui
+
+├── .env.local
+├── .env.example
+└── README.md
+
 
 ## Setup and Installation
 
